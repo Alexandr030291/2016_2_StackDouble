@@ -4,6 +4,8 @@ node_modules/
 /public/api/
 /public/module.js
 /api.raml
-/public/components/chat/chat.tmpl.js
-/public/components/chat/chat.tmpl.xml
-/public/components/userscore/UserScore.html
+*.tmpl.js
+/.sass-cache
+/public/css/*
+!/public/css/style.css
+!/public/css/style.css.map

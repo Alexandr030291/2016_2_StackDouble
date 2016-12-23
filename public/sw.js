@@ -1,11 +1,12 @@
 // наименование для нашего хранилища кэша
-const CACHE_NAME = 'app_serviceworker_v_1';
+const CACHE_NAME = 'app_serviceworker_v_2';
 // ссылки на кэшируемые файлы
 const cacheUrls = [
   "/css/style.css",
   "baseUrl.js",
   "lib/request.js",
   "/libs/technolibs/index.js",
+  "/models/request.js",
   "/modules/pathToRegex.js",
   "/modules/view.js",
   "/modules/route.js",

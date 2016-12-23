@@ -4,7 +4,8 @@
 	const View = window.View;
 	const Form = window.Form;
 	const request = window.request;
-  const UserModel = window.UserModel;
+  	const UserModel = window.UserModel;
+	const RequestModel = window.RequestModel;
 
 	class RegistrationView extends View {
 		constructor(options = {}) {
@@ -60,28 +61,37 @@
 				event.preventDefault();
 				const formData = this.form.getFormData();
 				const url = window.baseUrlApp + '/api/user';
-				console.log(formData);
-				if (request(url, {login:formData.login},'GET').status !== 200) {
-					if (formData.password === formData.lastpassword) {
-						const resultRequest = request(url , formData);
-						if (resultRequest.status === 200){
-							alert('Регистрация прошла успешно!');
-							let u = new UserModel({login: formData.login, avatar:"http://lorempixel.com/40/40", score: 0});
-							localStorage.setItem("UserProfile", JSON.stringify(u));
-							console.log("go to game");
-							this.router.go('/MainMenu');
-						}else {
-							alert('Упс что-то пошло не так');
-							console.log("go to registration");
-							this.router.go('/registration');
+				if (formData.password !== formData.lastpassword){
+					alert('Пароли не совпадают');
+				}else{
+					const resultRequest = request(url , {login: formData.login, email: formData.email, password: formData.password});
+					if (resultRequest.status === 200){
+						console.log(resultRequest.responseText);
+						let request = new RequestModel(resultRequest.responseText);
+						switch (request.json._code){
+							case 0:
+								alert('Регистрация прошла успешно!');
+								let u = new UserModel({login: formData.login, avatar:"http://lorempixel.com/40/40", score: 0});
+								localStorage.setItem("UserProfile", JSON.stringify(u));
+								console.log("go to game");
+								this.router.go('/MainMenu');
+								break;
+							case 1:
+							case 2:
+							case 3:
+							case 4:
+							case 5:
+								alert(request.json._response);
+								console.log("go to registration");
+								this.router.go('/registration');
+								break;
+							default:
+								alert('Неизвестная ошибка!');
 						}
-					}else {
-						alert('Пароли не совпадают');
+					}else{
+						alert('Неизвестная ошибка!');
 					}
-				}else {
-					alert('Такой пользователь уже существует!');
 				}
-
 			});
 			this.show();
 		}

@@ -7,6 +7,7 @@
 	const WaitingRoomView =window.WaitingRoomView;
 	const RegistrationView = window.RegistrationView;
     const TopListView = window.TopListView;
+	const MainViewMenu = window.MainMenuView;
 	// TIP: роуты нужно указывать от наиболее специфичного к наименее специфичному
 	// З.Ы. чтобы более ранние роуты не были префиксами более поздних ;]
 	(new Router)
@@ -14,6 +15,7 @@
 		.addRoute('/game', GameView)
 		.addRoute('/waitingroom', WaitingRoomView)
 		.addRoute('/registration', RegistrationView)
+		.addRoute('/MainMenu',MainViewMenu)
 		.addRoute('/', MainView)
 		.start();
 }());
